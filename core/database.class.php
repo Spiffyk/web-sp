@@ -17,7 +17,8 @@ class Database {
         require __DIR__."/../dbconfig.php";
         global $db_host, $db_schema, $db_user, $db_password, $db_prefix;
 
-        $this->pdo = new PDO("mysql:host=$db_host;dbname=$db_schema", $db_user, $db_password);
+        $this->pdo = new PDO(sprintf("mysql:host=%s;dbname=%s", $db_host, $db_schema), $db_user, $db_password);
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->prefix = $db_prefix;
     }
 

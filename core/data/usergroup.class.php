@@ -67,9 +67,9 @@ class UserGroup {
                 ->prepare(sprintf("INSERT INTO `%s` (`name`) VALUES (:name)",
                     $db->table(UserGroup::DB_TABLE_GROUPS)));
 
-            $stmt->bindParam("name", $name, PDO::PARAM_STR);
-
             $name = $this->getName();
+
+            $stmt->bindParam(":name", $name, PDO::PARAM_STR);
 
             $stmt->execute();
             $this->setId($db->getPdo()->lastInsertId());
@@ -79,10 +79,12 @@ class UserGroup {
                 ->prepare(sprintf("INSERT INTO `%s` (`group`, `permission`) VALUES (:group, :permission)",
                     $db->table(UserGroup::DB_TABLE_PERMISSIONS)));
 
-            $stmt->bindParam("group", $group, PDO::PARAM_INT);
-            $stmt->bindParam("permission", $permission, PDO::PARAM_STR);
-
             $group = $this->getId();
+            $permission = null;
+
+            $stmt->bindParam(":group", $group, PDO::PARAM_INT);
+            $stmt->bindParam(":permission", $permission, PDO::PARAM_STR);
+
             foreach ($this->permissions as $permission => $val) {
                 $stmt->execute();
             }
@@ -99,11 +101,11 @@ class UserGroup {
                 ->prepare(sprintf("UPDATE `%s` SET `name`=:name WHERE `id`=:id",
                     $db->table(UserGroup::DB_TABLE_GROUPS)));
 
-            $stmt->bindParam("name", $name, PDO::PARAM_STR);
-            $stmt->bindParam("id", $id, PDO::PARAM_INT);
-
             $name = $this->getName();
             $id = $this->getId();
+
+            $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
             $stmt->execute();
 
@@ -111,9 +113,9 @@ class UserGroup {
             $stmt = $db->getPdo()
                 ->prepare(sprintf("DELETE FROM `%s` WHERE `group`=:group"));
 
-            $stmt->bindParam("group", $group, PDO::PARAM_INT);
-
             $group = $this->getId();
+
+            $stmt->bindParam("group", $group, PDO::PARAM_INT);
 
             $stmt->execute();
 
@@ -122,8 +124,8 @@ class UserGroup {
                 ->prepare(sprintf("INSERT INTO `%s` (`group`, `permission`) VALUES (:group, :permission)",
                     $db->table(UserGroup::DB_TABLE_PERMISSIONS)));
 
-            $stmt->bindParam("group", $group, PDO::PARAM_INT);
-            $stmt->bindParam("permission", $permission, PDO::PARAM_STR);
+            $stmt->bindParam(":group", $group, PDO::PARAM_INT);
+            $stmt->bindParam(":permission", $permission, PDO::PARAM_STR);
 
             $group = $this->getId();
             foreach ($this->permissions as $permission => $val) {
@@ -141,7 +143,7 @@ class UserGroup {
             ->prepare(sprintf("SELECT * FROM `%s` WHERE `id`=:id",
                 $db->table(UserGroup::DB_TABLE_GROUPS)));
 
-        $stmt->bindParam("id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -159,7 +161,7 @@ class UserGroup {
             ->prepare(sprintf("SELECT * FROM `%s` WHERE `group`=:id",
                 $db->table(UserGroup::DB_TABLE_PERMISSIONS)));
 
-        $stmt->bindParam("id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

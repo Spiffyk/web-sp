@@ -57,15 +57,15 @@ class User {
             ->prepare(sprintf("INSERT INTO `%s` (`name`, `passwordhash`, `email`, `group`) VALUES (:name, :passwordhash, :email, :group)",
                 $db->table(User::DB_TAB_USERS)));
 
-        $stmt->bindParam("name", $name, PDO::PARAM_STR);
-        $stmt->bindParam("passwordhash", $passwordhash, PDO::PARAM_STR);
-        $stmt->bindParam("email", $email, PDO::PARAM_STR);
-        $stmt->bindParam("group", $groupid, PDO::PARAM_INT);
-
         $name = $this->getName();
         $passwordhash = $this->getPasswordhash();
         $email = $this->getEmail();
         $groupid = $this->getGroup()->getId();
+
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->bindParam(":passwordhash", $passwordhash, PDO::PARAM_STR);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":group", $groupid, PDO::PARAM_INT);
 
         $stmt->execute();
 
@@ -79,16 +79,16 @@ class User {
             ->prepare(sprintf("UPDATE `%s` SET `name`=:name, `passwordhash`=:passwordhash, `email`=:email, `group`=:group WHERE `id`=:id",
                 $db->table(User::DB_TAB_USERS)));
 
-        $stmt->bindParam("id", $id, PDO::PARAM_INT);
-        $stmt->bindParam("name", $name, PDO::PARAM_STR);
-        $stmt->bindParam("passwordhash", $passwordhash, PDO::PARAM_STR);
-        $stmt->bindParam("email", $email, PDO::PARAM_STR);
-        $stmt->bindParam("group", $groupid, PDO::PARAM_INT);
-
         $name = $this->getName();
         $passwordhash = $this->getPasswordhash();
         $email = $this->getEmail();
         $groupid = $this->getGroup()->getId();
+
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->bindParam(":passwordhash", $passwordhash, PDO::PARAM_STR);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":group", $groupid, PDO::PARAM_INT);
 
         $stmt->execute();
     }
@@ -98,7 +98,7 @@ class User {
         $stmt = $db->getPdo()
             ->prepare(sprintf("SELECT * FROM `%s` WHERE `id`=:id", $db->table(User::DB_TAB_USERS)));
 
-        $stmt->bindParam("id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
         $stmt->execute();
 
