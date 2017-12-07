@@ -4,8 +4,18 @@
  */
 class UserGroup {
 
-    const DB_TABLE_GROUPS = "usergroups";
-    const DB_TABLE_PERMISSIONS = "permissions";
+    private const DB_TABLE_GROUPS = "usergroups";
+    private const DB_TABLE_PERMISSIONS = "permissions";
+
+    /**
+     * The group ID of anonymous (i.e. not signed in) users.
+     */
+    public const GROUP_ANONYMOUS = -1;
+
+    /**
+     * The group ID of administrators.
+     */
+    public const GROUP_ADMINS = 0;
 
     private static $groupsById = array();
 
@@ -13,8 +23,13 @@ class UserGroup {
     private $permissions = array();
 
 
-
-    public static function get(int $id): UserGroup {
+    /**
+     * Gets a group with the specified ID.
+     *
+     * @param int $id the group ID
+     * @return UserGroup the group or <code>null</code> if a group with such an ID does not exist
+     */
+    public static function get(int $id): ?UserGroup {
         if (empty(UserGroup::$groupsById[$id])) {
             UserGroup::$groupsById[$id] = UserGroup::dao_loadById($id);
         }
@@ -135,7 +150,7 @@ class UserGroup {
         $db->getPdo()->commit();
     }
 
-    private static function dao_loadById(int $id): UserGroup {
+    private static function dao_loadById(int $id): ?UserGroup {
         $db = Database::getInstance();
 
         // Load group from DB

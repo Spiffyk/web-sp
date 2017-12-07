@@ -93,27 +93,39 @@ class User {
         $stmt->execute();
     }
 
-    public static function dao_getById(int $id): User {
+    public static function dao_getById(int $id): ?User {
         $db = Database::getInstance();
         $stmt = $db->getPdo()
             ->prepare(sprintf("SELECT * FROM `%s` WHERE `id`=:id", $db->table(User::DB_TAB_USERS)));
-
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
-
         $stmt->execute();
-
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (empty($result) || $result == false) {
+        return self::dao_dataToUser($result);
+    }
+
+    public static function dao_getByName(string $name): ?User {
+        $db = Database::getInstance();
+        $stmt = $db->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `name`=:name", $db->table(User::DB_TAB_USERS)));
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return self::dao_dataToUser($result);
+    }
+
+    private static function dao_dataToUser($data): ?User {
+        if (empty($data) || $data == false) {
             return null;
         }
 
         $user = new User();
-        $user->setId($id);
-        $user->setName($result["name"]);
-        $user->setPasswordhash($result["passwordhash"]);
-        $user->setEmail($result["email"]);
-        $user->setGroup(UserGroup::get($result["group"]));
+        $user->setId($data["id"]);
+        $user->setName($data["name"]);
+        $user->setPasswordhash($data["passwordhash"]);
+        $user->setEmail($data["email"]);
+        $user->setGroup(UserGroup::get($data["group"]));
         return $user;
     }
 
