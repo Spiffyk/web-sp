@@ -4,6 +4,12 @@
  */
 class Config {
 
+    /**
+     * Time, in seconds, for which the configuration will be loaded from a memcache (if applicable) until it is
+     * reloaded from the database.
+     */
+    const CACHE_VALIDITY_TIME = 3600;
+
     private static $instance = null;
 
     private $config;
@@ -30,6 +36,10 @@ class Config {
      * Saves the configuration, if changed.
      */
     function __destruct() {
+        Mem::ifCached(function(Memcached $memcached) {
+            $memcached->set(Mem::key("config"), $this);
+        });
+
         if ($this->hasChanged) {
             $db = Database::getInstance();
             $statement =
@@ -52,11 +62,24 @@ class Config {
      * @return Config the instance
      */
     public static function getInstance(): Config {
-        if (Config::$instance == null) {
-            Config::$instance = new Config();
+        if (Config::$instance != null) {
+            return Config::$instance;
         }
 
-        return Config::$instance;
+        return Mem::ifCached(function(Memcached $memcached) {
+            $key = Mem::key("cache");
+            $cachedConfig = $memcached->get($key);
+
+            if ($cachedConfig == false) {
+                Config::$instance = new Config();
+                $memcached->set($key, Config::$instance, Config::CACHE_VALIDITY_TIME);
+                return Config::$instance;
+            } else {
+                return Config::$instance = $cachedConfig;
+            }
+        }, function() {
+            return Config::$instance = new Config();
+        });
     }
 
     /**
@@ -90,5 +113,4 @@ class Config {
         }
         echo "}";
     }
-
 }

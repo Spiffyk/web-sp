@@ -14,7 +14,7 @@ class Database {
      * Database singleton constructor.
      */
     private function __construct() {
-        require __DIR__."/../dbconfig.php";
+        require __DIR__ . "/../appconfig.php";
         global $db_host, $db_schema, $db_user, $db_password, $db_prefix;
 
         $this->pdo = new PDO(sprintf("mysql:host=%s;dbname=%s", $db_host, $db_schema), $db_user, $db_password);
