@@ -8,6 +8,16 @@ class User {
 
     private $id, $name, $passwordhash, $email, $group;
 
+    private static $usersById = array();
+
+    public static function get(int $id): ?User {
+        if (empty(User::$usersById[$id])) {
+            User::$usersById[$id] = User::dao_getById($id);
+        }
+
+        return User::$usersById[$id];
+    }
+
     public function getId(): int {
         return $this->id;
     }
