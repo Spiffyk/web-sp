@@ -31,7 +31,7 @@ class UserGroup {
      */
     public static function get(int $id): ?UserGroup {
         if (empty(UserGroup::$groupsById[$id])) {
-            UserGroup::$groupsById[$id] = UserGroup::dao_loadById($id);
+            UserGroup::$groupsById[$id] = UserGroup::dao_getById($id);
         }
 
         return UserGroup::$groupsById[$id];
@@ -150,7 +150,7 @@ class UserGroup {
         $db->getPdo()->commit();
     }
 
-    private static function dao_loadById(int $id): ?UserGroup {
+    private static function dao_getById(int $id): ?UserGroup {
         $db = Database::getInstance();
 
         // Load group from DB
