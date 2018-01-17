@@ -4,6 +4,8 @@
  */
 class Database {
 
+    public const DATE_FORMAT = "Y-m-d H:i:s";
+
     private static $instance = null;
 
     public $wasCached = false;
