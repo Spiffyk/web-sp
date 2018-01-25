@@ -80,6 +80,7 @@ class User {
         $stmt->execute();
 
         $this->setId($db->getPdo()->lastInsertId());
+        User::$usersById[$this->getId()] = $this;
     }
 
     public function dao_update() {

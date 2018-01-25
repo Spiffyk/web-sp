@@ -87,7 +87,6 @@ class UserGroup {
             $stmt->bindParam(":name", $name, PDO::PARAM_STR);
 
             $stmt->execute();
-            $this->setId($db->getPdo()->lastInsertId());
 
             // Create permissions in DB
             $stmt = $db->getPdo()
@@ -105,6 +104,8 @@ class UserGroup {
             }
         }
         $db->getPdo()->commit();
+        $this->setId($db->getPdo()->lastInsertId());
+        UserGroup::$groupsById[$this->getId()] = $this;
     }
 
     public function dao_update() {
