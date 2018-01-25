@@ -1,6 +1,9 @@
 <?php
 class Mem {
 
+    private const DEFAULT_SERVER = "127.0.0.1";
+    private const DEFAULT_PORT = 11211;
+
     private static $memcached;
 
     /**
@@ -15,7 +18,7 @@ class Mem {
 
         if (Mem::$memcached == null) {
             Mem::$memcached = new Memcached();
-            Mem::$memcached->addServer("127.0.0.1", 11211);
+            Mem::$memcached->addServer(Mem::DEFAULT_SERVER, Mem::DEFAULT_PORT);
         }
 
         return Mem::$memcached;
@@ -31,7 +34,7 @@ class Mem {
      * @param callable|null $else the function to call if caching <b>is not</b> available
      * @return mixed|null the return value of the called function or <code>null</code> if nothing is returned
      */
-    public static function ifCached(callable $if, ?callable $else = null): ?mixed {
+    public static function ifCached(callable $if, ?callable $else = null) {
         $memcached = Mem::get();
         if ($memcached == null) {
             if ($else == null) {

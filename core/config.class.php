@@ -36,11 +36,9 @@ class Config {
      * Saves the configuration, if changed.
      */
     function __destruct() {
-        Mem::ifCached(function(Memcached $memcached) {
-            $memcached->set(Mem::key("config"), $this);
-        });
-
         if ($this->hasChanged) {
+            $this->hasChanged = false;
+
             $db = Database::getInstance();
             $statement =
                 $db
@@ -54,6 +52,11 @@ class Config {
                 $statement->execute();
             }
         }
+
+        Mem::ifCached(function(Memcached $memcached) {
+            $memcached->set(Mem::key("config"), $this);
+            return null;
+        });
     }
 
     /**
@@ -88,8 +91,12 @@ class Config {
      * @param string $key the key
      * @return string the value
      */
-    public function get(string $key): string {
-        return $this->config[$key];
+    public function get(string $key): ?string {
+        if (isset($this->config[$key])) {
+            return $this->config[$key];
+        } else {
+            return null;
+        }
     }
 
     /**
