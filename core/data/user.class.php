@@ -59,7 +59,9 @@ class User {
     }
 
 
-
+    /**
+     * Creates the user in the database.
+     */
     public function dao_create() {
         $db = Database::getInstance();
         $stmt = $db
@@ -83,6 +85,9 @@ class User {
         User::$usersById[$this->getId()] = $this;
     }
 
+    /**
+     * Updates the user in the database.
+     */
     public function dao_update() {
         $db = Database::getInstance();
         $stmt = $db
@@ -104,6 +109,12 @@ class User {
         $stmt->execute();
     }
 
+    /**
+     * Gets a user by ID.
+     *
+     * @param int $id the user ID
+     * @return null|User
+     */
     public static function dao_getById(int $id): ?User {
         $db = Database::getInstance();
         $stmt = $db->getPdo()
@@ -115,6 +126,12 @@ class User {
         return self::dao_dataToUser($result);
     }
 
+    /**
+     * Gets a user by name.
+     *
+     * @param string $name the user name
+     * @return null|User
+     */
     public static function dao_getByName(string $name): ?User {
         $db = Database::getInstance();
         $stmt = $db->getPdo()
@@ -126,6 +143,12 @@ class User {
         return self::dao_dataToUser($result);
     }
 
+    /**
+     * Converts a data array associatively fetched from the database to a User.
+     *
+     * @param $data - the data array
+     * @return null|User
+     */
     private static function dao_dataToUser($data): ?User {
         if (empty($data) || $data == false) {
             return null;

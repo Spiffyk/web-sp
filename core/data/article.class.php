@@ -123,7 +123,9 @@ class Article {
     }
 
 
-
+    /**
+     * Creates the article in the database.
+     */
     public function dao_create() {
         $db = Database::getInstance();
         $stmt = $db
@@ -156,7 +158,10 @@ class Article {
         $this->setId($db->getPdo()->lastInsertId());
     }
 
-    public function dao_save() {
+    /**
+     * Updates the article in the database.
+     */
+    public function dao_update() {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
@@ -188,6 +193,12 @@ class Article {
         $stmt->execute();
     }
 
+    /**
+     * Gets an article by ID.
+     *
+     * @param int $id the article ID
+     * @return Article
+     */
     public static function dao_getById(int $id): Article {
         $db = Database::getInstance();
         $stmt = $db
@@ -201,6 +212,13 @@ class Article {
         return self::dao_dataToArticle($result);
     }
 
+    /**
+     * Gets the articles ordered by the date of creation.
+     *
+     * @param int $n how many
+     * @param int $offset the offset
+     * @return array
+     */
     public static function dao_getNewest(int $n, int $offset): array {
         $db = Database::getInstance();
         $stmt = $db
@@ -222,6 +240,12 @@ class Article {
         return $articles;
     }
 
+    /**
+     * Converts a data array fetched associatively from the database to an Article.
+     *
+     * @param $data the data array
+     * @return Article
+     */
     private static function dao_dataToArticle($data) : Article {
         if (empty($data) || $data == false) {
             return null;
