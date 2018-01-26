@@ -15,7 +15,7 @@ class UserGroup {
     /**
      * The group ID of administrators.
      */
-    public const GROUP_ADMINS = 0;
+    public const GROUP_ROOT = 0;
 
     public const ROOT_PERMISSION = "root";
 
@@ -61,20 +61,38 @@ class UserGroup {
         $this->name = $name;
     }
 
+    /**
+     * Checks whether the group has the permission with the specified code or the root permission.
+     *
+     * @param string $permission the permission code
+     * @return bool
+     */
     public function hasPermission(string $permission): bool {
         return !empty($this->permissions[self::ROOT_PERMISSION]) || !empty($this->permissions[strtolower($permission)]);
     }
 
+    /**
+     * Grants the permission with the specified code to the group.
+     *
+     * @param string $permission
+     */
     public function addPermission(string $permission) {
         $this->permissions[strtolower($permission)] = 1;
     }
 
+    /**
+     * Revokes the permission with the specified code from the group.
+     *
+     * @param string $permission
+     */
     public function removePermission(string $permission) {
         unset($this->permissions[strtolower($permission)]);
     }
 
 
-
+    /**
+     * Creates the group in the database.
+     */
     public function dao_create() {
         $db = Database::getInstance();
         $db->getPdo()->beginTransaction();
@@ -110,6 +128,9 @@ class UserGroup {
         UserGroup::$groupsById[$this->getId()] = $this;
     }
 
+    /**
+     * Updates the group in the database.
+     */
     public function dao_update() {
         $db = Database::getInstance();
         $db->getPdo()->beginTransaction();
@@ -153,6 +174,12 @@ class UserGroup {
         $db->getPdo()->commit();
     }
 
+    /**
+     * Gets the group with the specified ID from the database.
+     *
+     * @param int $id
+     * @return null|UserGroup
+     */
     private static function dao_getById(int $id): ?UserGroup {
         $db = Database::getInstance();
 

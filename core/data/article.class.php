@@ -132,16 +132,20 @@ class Article {
                 $db->table(Article::DB_TAB_ARTICLES)));
 
         $author_id = $this->getAuthor();
-        $created = $this->getCreated();
-        $modified = $this->getModified();
+        $created = $this->getCreated()->format(Database::DATE_FORMAT);
+        if (empty($this->getModified())) {
+            $modified = null;
+        } else {
+            $modified = $this->getModified()->format(Database::DATE_FORMAT);
+        }
         $state = $this->getState();
         $title = $this->getTitle();
         $abstract = $this->getAbstract();
         $file = $this->getFile();
 
         $stmt->bindParam(":author_id", $author_id, PDO::PARAM_INT);
-        $stmt->bindParam(":created", $created->format(Database::DATE_FORMAT), PDO::PARAM_STR);
-        $stmt->bindParam(":modified", $modified->format(Database::DATE_FORMAT), PDO::PARAM_STR);
+        $stmt->bindParam(":created", $created, PDO::PARAM_STR);
+        $stmt->bindParam(":modified", $modified, PDO::PARAM_STR);
         $stmt->bindParam(":state", $state, PDO::PARAM_INT);
         $stmt->bindParam(":title", $title, PDO::PARAM_STR);
         $stmt->bindParam(":abstract", $abstract, PDO::PARAM_STR);
@@ -161,8 +165,12 @@ class Article {
 
         $id = $this->getId();
         $author_id = $this->getAuthor();
-        $created = $this->getCreated();
-        $modified = $this->getModified();
+        $created = $this->getCreated()->format(Database::DATE_FORMAT);
+        if (empty($this->getModified())) {
+            $modified = null;
+        } else {
+            $modified = $this->getModified()->format(Database::DATE_FORMAT);
+        }
         $state = $this->getState();
         $title = $this->getTitle();
         $abstract = $this->getAbstract();
@@ -170,8 +178,8 @@ class Article {
 
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->bindParam(":author_id", $author_id, PDO::PARAM_INT);
-        $stmt->bindParam(":created", $created->format(Database::DATE_FORMAT), PDO::PARAM_STR);
-        $stmt->bindParam(":modified", $modified->format(Database::DATE_FORMAT), PDO::PARAM_STR);
+        $stmt->bindParam(":created", $created, PDO::PARAM_STR);
+        $stmt->bindParam(":modified", $modified, PDO::PARAM_STR);
         $stmt->bindParam(":state", $state, PDO::PARAM_INT);
         $stmt->bindParam(":title", $title, PDO::PARAM_STR);
         $stmt->bindParam(":abstract", $abstract, PDO::PARAM_STR);
