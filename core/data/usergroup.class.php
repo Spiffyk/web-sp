@@ -17,6 +17,8 @@ class UserGroup {
      */
     public const GROUP_ADMINS = 0;
 
+    public const ROOT_PERMISSION = "root";
+
     private static $groupsById = array();
 
     private $id, $name;
@@ -60,15 +62,15 @@ class UserGroup {
     }
 
     public function hasPermission(string $permission): bool {
-        return !empty($this->permissions[$permission]);
+        return !empty($this->permissions[self::ROOT_PERMISSION]) || !empty($this->permissions[strtolower($permission)]);
     }
 
     public function addPermission(string $permission) {
-        $this->permissions[$permission] = 1;
+        $this->permissions[strtolower($permission)] = 1;
     }
 
     public function removePermission(string $permission) {
-        unset($this->permissions[$permission]);
+        unset($this->permissions[strtolower($permission)]);
     }
 
 
