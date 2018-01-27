@@ -1,5 +1,12 @@
 #messenger {
-    margin: 0 8cm;
+    margin: 0 0.1cm;
+}
+
+
+@media only screen and (min-width: 768px) {
+    #messenger {
+        margin: 0 8cm;
+    }
 }
 
 #messenger .message {
