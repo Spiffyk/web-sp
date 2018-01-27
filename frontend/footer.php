@@ -1,1 +1,2 @@
-Semestrální práce z KIV/WEB. Oto Šťáva 2017/2018
+<strong>Semestrální práce z KIV/WEB</strong><br />
+2018 | Oto Šťáva
