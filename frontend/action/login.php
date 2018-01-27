@@ -12,7 +12,7 @@
         if (empty($_POST["username"])) {
             $username = "";
         } else {
-            $username = $_POST["username"];
+            $username = htmlspecialchars($_POST["username"]);
         }
         ?>
 
