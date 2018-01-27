@@ -1,0 +1,36 @@
+#messenger {
+    margin: 0 8cm;
+}
+
+#messenger .message {
+    margin: 0.1cm 0;
+    padding: 0.25cm;
+
+    border: solid 0.05cm black;
+}
+
+#messenger .message-body {
+    font-weight: bold;
+}
+
+#messenger .message-detail {
+    font-size: 10pt;
+}
+
+#messenger .info-msg {
+    background-color: #ffedcb;
+    border-color: #ffc25b;
+    color: #975107;
+}
+
+#messenger .error-msg {
+    background-color: #ffcac8;
+    border-color: #ff293d;
+    color: #ff0000;
+}
+
+#messenger .success-msg {
+    background-color: #a5ffa3;
+    border-color: #1ae129;
+    color: #177200;
+}

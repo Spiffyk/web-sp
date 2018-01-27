@@ -1,0 +1,28 @@
+#titlebar {
+    text-align: center;
+    background-color: #fff;
+    margin: 0;
+    padding: 0.2cm;
+    box-shadow: #000 0 0 0.4cm -0.2cm;
+}
+
+@media only screen and (min-width: 768px) {
+    #titlebar {
+        padding: 1cm;
+    }
+}
+
+#titlebar a {
+    color: #1e4c97;
+}
+
+#titlebar a:hover {
+    text-decoration: none;
+    color: #2060c0;
+}
+
+#titlebar h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 30pt;
+}

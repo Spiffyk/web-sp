@@ -1,0 +1,9 @@
+#content {
+    margin: 1cm 0.2cm;
+}
+
+@media only screen and (min-width: 768px) {
+    #content {
+        margin: 1cm 3cm;
+    }
+}

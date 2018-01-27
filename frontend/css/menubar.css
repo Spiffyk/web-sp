@@ -1,0 +1,38 @@
+#menubar {
+    text-align: center;
+    background-color: #fff;
+    margin: 1cm 0;
+    padding: 0.25cm;
+    box-shadow: #000 0 0 0.4cm -0.2cm;
+}
+
+@media only screen and (min-width: 768px) {
+    #menubar {
+        position: sticky;
+        top: 0.1cm;
+    }
+}
+
+#menubar a {
+    color: #1e4c97;
+}
+
+#menubar a:hover {
+    text-decoration: none;
+    color: #2060c0;
+}
+
+#menubar h1 {
+    font-size: 30pt;
+}
+
+#menubar ul {
+    padding: 0;
+    margin: 0;
+}
+
+#menubar li {
+    display: inline;
+    margin: 0 0.5cm;
+    padding: 0;
+}
