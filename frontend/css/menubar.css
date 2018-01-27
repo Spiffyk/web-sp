@@ -2,7 +2,7 @@
     text-align: center;
     background-color: #fff;
     margin: 1cm 0;
-    padding: 0.25cm;
+    padding: 0.5cm;
     box-shadow: #000 0 0 0.4cm -0.2cm;
 
     white-space: nowrap;
@@ -15,6 +15,7 @@
 
 @media only screen and (min-width: 768px) {
     #menubar {
+        padding: 0.25cm;
         top: 0.2cm;
     }
 }
