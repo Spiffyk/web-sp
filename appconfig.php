@@ -5,6 +5,6 @@ $db_host        = "localhost";
 $db_schema      = "efphp";
 $db_user        = "efphp";
 $db_password    = "securepassword";
-$db_prefix      = "efphp_";
+$db_prefix      = "testprefix_";
 
 $memcache_enabled  = true;

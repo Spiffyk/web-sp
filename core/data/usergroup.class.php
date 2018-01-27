@@ -15,7 +15,12 @@ class UserGroup {
     /**
      * The group ID of administrators.
      */
-    public const GROUP_ROOT = 0;
+    public const GROUP_ROOT = -3;
+
+    /**
+     * The group ID of unverified users.
+     */
+    public const GROUP_UNVERIFIED = -2;
 
     public const ROOT_PERMISSION = "root";
 
@@ -99,11 +104,13 @@ class UserGroup {
         {
             // Create group in DB
             $stmt = $db->getPdo()
-                ->prepare(sprintf("INSERT INTO `%s` (`name`) VALUES (:name)",
+                ->prepare(sprintf("INSERT INTO `%s` (`id`, `name`) VALUES (:id, :name)",
                     $db->table(UserGroup::DB_TABLE_GROUPS)));
 
+            $id = $this->getId();
             $name = $this->getName();
 
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
             $stmt->bindParam(":name", $name, PDO::PARAM_STR);
 
             $stmt->execute();
@@ -113,10 +120,9 @@ class UserGroup {
                 ->prepare(sprintf("INSERT INTO `%s` (`group`, `permission`) VALUES (:group, :permission)",
                     $db->table(UserGroup::DB_TABLE_PERMISSIONS)));
 
-            $group = $this->getId();
             $permission = null;
 
-            $stmt->bindParam(":group", $group, PDO::PARAM_INT);
+            $stmt->bindParam(":group", $id, PDO::PARAM_INT);
             $stmt->bindParam(":permission", $permission, PDO::PARAM_STR);
 
             foreach ($this->permissions as $permission => $val) {
@@ -124,7 +130,7 @@ class UserGroup {
             }
         }
         $db->getPdo()->commit();
-        $this->setId($db->getPdo()->lastInsertId());
+//        $this->setId($db->getPdo()->lastInsertId());
         UserGroup::$groupsById[$this->getId()] = $this;
     }
 
