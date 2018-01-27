@@ -3,7 +3,7 @@
     background-color: #fff;
     margin: 0;
     padding: 0.2cm;
-    box-shadow: #000 0 0 0.4cm -0.2cm;
+    box-shadow: rgba(0,0,0,0.2) 0 0 0.4cm;
 }
 
 @media only screen and (min-width: 768px) {

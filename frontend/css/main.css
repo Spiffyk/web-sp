@@ -21,3 +21,35 @@ a:hover {
 .userform {
     text-align: center;
 }
+
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 0.3cm 0.5cm;
+    border: solid 0.05cm #c5c6d6;
+    box-shadow: inset rgba(0,0,0,0.2) 0 0 0.1cm;
+
+    color: #000;
+    background-color: #fff;
+}
+
+button, input[type="submit"], input[type="button"] {
+    padding: 0.3cm 0.5cm;
+    border: solid 0.075cm #c5c6d6;
+    border-radius: 0.1cm;
+    border-left-color: #dbe0e4;
+    border-top-color: #dbe0e4;
+    border-right-color: #b5b9bd;
+    border-bottom-color: #b5b9bd;
+
+    font-weight: bold;
+    color: #000;
+    background-color: #f8f8f8;
+}
+
+button:active, input[type="submit"]:active, input[type="button"]:active {
+    background-color: #eeeeee;
+
+    border-left-color: #b5b9bd;
+    border-top-color: #b5b9bd;
+    border-right-color: #dbe0e4;
+    border-bottom-color: #dbe0e4;
+}
