@@ -207,10 +207,9 @@ class UserGroup {
                 $db->table(UserGroup::DB_TABLE_PERMISSIONS)));
 
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($result as $perm) {
+        while (!empty($perm = $stmt->fetch(PDO::FETCH_ASSOC))) {
             $usergroup->addPermission($perm["permission"]);
         }
 
