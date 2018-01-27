@@ -1,1 +1,20 @@
 <?php
+if (isset($_POST["cmd"])) {
+    $cmd = $_POST["cmd"];
+} else if (isset($_GET["cmd"])) {
+    $cmd = $_GET["cmd"];
+} else {
+    $cmd = null;
+}
+
+switch($cmd) {
+    case "login":
+        require_once __DIR__ . "/cmd/login.php";
+        break;
+    case "logout":
+        require_once __DIR__ . "/cmd/logout.php";
+        break;
+    case "register":
+        require_once __DIR__ . "/cmd/register.php";
+        break;
+}

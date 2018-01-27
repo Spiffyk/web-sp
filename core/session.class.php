@@ -108,6 +108,8 @@ class Session {
     public function logout() {
         if (session_status() == PHP_SESSION_ACTIVE) {
             session_destroy();
+            $this->user = null;
+            $this->group = UserGroup::get(UserGroup::GROUP_ANONYMOUS);
         }
     }
 

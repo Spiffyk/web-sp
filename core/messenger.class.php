@@ -19,11 +19,11 @@ class Messenger {
      * @return Messenger the singleton instance of Messenger
      */
     public static function getInstance(): Messenger {
-        if (empty($instance)) {
-            $instance = new Messenger();
+        if (empty(self::$instance)) {
+            self::$instance = new Messenger();
         }
 
-        return $instance;
+        return self::$instance;
     }
 
     private function __construct() {
