@@ -5,14 +5,19 @@
 class Session {
 
     /**
-     * Returned by {@link login} on success.
+     * Returned by login on success.
      */
     public const LOGIN_SUCCESS = 0;
 
     /**
-     * Returned by {@link login} when username or password is wrong.
+     * Returned by login when username or password is wrong.
      */
     public const LOGIN_WRONG_CREDENTIALS = 1;
+
+    /**
+     * Returned by login when the user has no permission to log in.
+     */
+    public const LOGIN_NOT_PERMITTED = 2;
 
     private static $instance = null;
 
@@ -95,8 +100,12 @@ class Session {
         }
 
         if (password_verify($password, $user->getPasswordhash())) {
-            $this->start($user);
-            return Session::LOGIN_SUCCESS;
+            if ($user->getGroup()->hasPermission("login")) {
+                $this->start($user);
+                return Session::LOGIN_SUCCESS;
+            } else {
+                return Session::LOGIN_NOT_PERMITTED;
+            }
         } else {
             return Session::LOGIN_WRONG_CREDENTIALS;
         }

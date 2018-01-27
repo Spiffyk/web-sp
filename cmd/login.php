@@ -24,6 +24,12 @@ $fn = function () {
         case Session::LOGIN_WRONG_CREDENTIALS:
             $messenger->message(Messenger::TYPE_ERROR, "Nesprávné uživatelské jméno nebo heslo.");
             break;
+        case Session::LOGIN_NOT_PERMITTED:
+            $messenger->message(
+                Messenger::TYPE_ERROR,
+                "Tento uživatel nemá oprávnění k přihlášení.",
+                "Účet může být dosud neschválený nebo mohl být zablokován.");
+            break;
         default:
             $messenger->message(Messenger::TYPE_ERROR, "Při přihlašování došlo k neznámé chybě.");
     }
