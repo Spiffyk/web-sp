@@ -197,9 +197,9 @@ class Article {
      * Gets an article by ID.
      *
      * @param int $id the article ID
-     * @return Article
+     * @return null|Article
      */
-    public static function dao_getById(int $id): Article {
+    public static function dao_getById(int $id): ?Article {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
@@ -223,7 +223,7 @@ class Article {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
-            ->prepare(sprintf("SELECT * FROM `%s` ORDER BY `created` LIMIT :n OFFSET :offset",
+            ->prepare(sprintf("SELECT * FROM `%s` ORDER BY `created` DESC LIMIT :n OFFSET :offset",
                 $db->table(Article::DB_TAB_ARTICLES)));
 
         $stmt->bindParam(":n", $n, PDO::PARAM_INT);
@@ -244,9 +244,9 @@ class Article {
      * Converts a data array fetched associatively from the database to an Article.
      *
      * @param $data the data array
-     * @return Article
+     * @return null|Article
      */
-    private static function dao_dataToArticle($data) : Article {
+    private static function dao_dataToArticle($data) : ?Article {
         if (empty($data) || $data == false) {
             return null;
         }
@@ -264,5 +264,7 @@ class Article {
         $article->setTitle($data["title"]);
         $article->setAbstract($data["abstract"]);
         $article->setFile($data["file"]);
+
+        return $article;
     }
 }
