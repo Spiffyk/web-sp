@@ -43,7 +43,7 @@ echo "Creating permissions table...\n";
 $pdo->query("CREATE TABLE IF NOT EXISTS `" . $db_prefix . "permissions` (
     `group` INT NOT NULL,
     `permission` VARCHAR(255) NOT NULL,
-    PRIMARY KEY (`group`),
+    -- PRIMARY KEY (`group`, `permission`),
     CONSTRAINT `fk_" . $db_prefix . "permissions_" . $db_prefix . "usergroups1`
         FOREIGN KEY (`group`)
         REFERENCES `" . $db_prefix . "usergroups` (`id`)
@@ -134,8 +134,36 @@ echo "Creating `root` group...\n";
 $root_group = new UserGroup();
 $root_group->setId(UserGroup::GROUP_ROOT);
 $root_group->setName("root");
-$root_group->addPermission("root");
+$root_group->addPermission("login", "root");
 $root_group->dao_create();
+
+echo "Creating `reader` group...\n";
+$reader_group = new UserGroup();
+$reader_group->setId(UserGroup::GROUP_READER);
+$reader_group->setName("reader");
+$reader_group->addPermission("login", "read-articles");
+$reader_group->dao_create();
+
+echo "Creating `reviewer` group...\n";
+$review_group = new UserGroup();
+$review_group->setId(UserGroup::GROUP_REVIEWER);
+$review_group->setName("reviewer");
+$review_group->addPermission("login", "article_read", "article_review");
+$review_group->dao_create();
+
+echo "Creating `author` group...\n";
+$author_group = new UserGroup();
+$author_group->setId(UserGroup::GROUP_AUTHOR);
+$author_group->setName("author");
+$author_group->addPermission("login", "article_read", "article_creation");
+$author_group->dao_create();
+
+echo "Creating `admin` group...\n";
+$admin_group = new UserGroup();
+$admin_group->setId(UserGroup::GROUP_ADMIN);
+$admin_group->setName("admin");
+$admin_group->addPermission("login", "article_read", "article_approval", "user_approval");
+$admin_group->dao_create();
 
 echo "Creating `root` user...\n";
 $root_user = new User();

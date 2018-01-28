@@ -22,6 +22,29 @@ class UserGroup {
      */
     public const GROUP_UNVERIFIED = -2;
 
+    /**
+     * The group ID of readers.
+     */
+    public const GROUP_READER = 1;
+
+    /**
+     * The group ID of reviewers.
+     */
+    public const GROUP_REVIEWER = 2;
+
+    /**
+     * The group ID of authors.
+     */
+    public const GROUP_AUTHOR = 3;
+
+    /**
+     * The group ID of admins.
+     */
+    public const GROUP_ADMIN = 4;
+
+    /**
+     * The full-control permission.
+     */
     public const ROOT_PERMISSION = "root";
 
     private static $groupsById = array();
@@ -77,21 +100,25 @@ class UserGroup {
     }
 
     /**
-     * Grants the permission with the specified code to the group.
+     * Grants the permissions with the specified codes to the group.
      *
-     * @param string $permission
+     * @param string $permissions
      */
-    public function addPermission(string $permission) {
-        $this->permissions[strtolower($permission)] = 1;
+    public function addPermission(string ...$permissions) {
+        foreach ($permissions as $permission) {
+            $this->permissions[strtolower($permission)] = 1;
+        }
     }
 
     /**
-     * Revokes the permission with the specified code from the group.
+     * Revokes the permissions with the specified codes from the group.
      *
-     * @param string $permission
+     * @param string $permissions
      */
-    public function removePermission(string $permission) {
-        unset($this->permissions[strtolower($permission)]);
+    public function removePermission(string ...$permissions) {
+        foreach ($permissions as $permission) {
+            unset($this->permissions[strtolower($permission)]);
+        }
     }
 
 
