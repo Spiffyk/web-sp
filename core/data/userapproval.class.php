@@ -140,7 +140,8 @@ class UserApproval {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
-            ->prepare(sprintf("SELECT * FROM `%s` WHERE `closed` IS NULL ORDER BY `opened` LIMIT :n OFFSET :offset"));
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `closed` IS NULL ORDER BY `opened` LIMIT :n OFFSET :offset",
+                $db->table(self::DB_TAB_USER_APPROVAL)));
 
         $stmt->bindParam(":n", $n, PDO::PARAM_INT);
         $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
