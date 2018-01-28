@@ -104,10 +104,10 @@ $pdo->query("CREATE TABLE IF NOT EXISTS `" . $db_prefix . "review` (
 
 echo "Creating user_approval table...\n";
 $pdo->query("CREATE TABLE IF NOT EXISTS `" . $db_prefix . "user_approval` (
-    `id` INT NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `opened` DATETIME NOT NULL,
-    `closed` DATETIME NOT NULL,
+    `closed` DATETIME,
     `state` SMALLINT NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_" . $db_prefix . "user_approval_" . $db_prefix . "users1_idx` (`user_id` ASC),

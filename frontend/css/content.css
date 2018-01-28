@@ -1,5 +1,6 @@
 #content {
     margin: 1cm 0.2cm;
+    overflow-x: auto;
 }
 
 @media only screen and (min-width: 768px) {

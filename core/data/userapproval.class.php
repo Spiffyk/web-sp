@@ -157,6 +157,23 @@ class UserApproval {
     }
 
     /**
+     * Counts the open user approvals in the database.
+     *
+     * @return int the number of open user approvals
+     */
+    public static function dao_countOpen(): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `closed` IS NULL",
+                $db->table(self::DB_TAB_USER_APPROVAL)));
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
+    }
+
+    /**
      * Gets a list of closed approvals, ordered by the date of closure.
      *
      * @param int $n how many
@@ -180,6 +197,23 @@ class UserApproval {
         }
 
         return $approvals;
+    }
+
+    /**
+     * Counts the closed user approvals in the database.
+     *
+     * @return int the number of closed user approvals
+     */
+    public static function dao_countClosed(): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `closed` IS NOT NULL",
+                $db->table(self::DB_TAB_USER_APPROVAL)));
+
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
     }
 
     /**
