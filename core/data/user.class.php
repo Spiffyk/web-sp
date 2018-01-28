@@ -92,9 +92,10 @@ class User {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
-            ->prepare(sprintf("UPDATE `%s` SET `name`=:name, `passwordhash`=:passwordhash, `email`=:email, `group`=:group WHERE `id`=:id",
-                $db->table(User::DB_TAB_USERS)));
+            ->prepare(sprintf("UPDATE `%s` SET `name`=:name, `passwordhash`=:passwordhash, `email`=:email, `group`=:groupid WHERE `id`=:id",
+                $db->table(self::DB_TAB_USERS)));
 
+        $id = $this->getId();
         $name = $this->getName();
         $passwordhash = $this->getPasswordhash();
         $email = $this->getEmail();
@@ -104,7 +105,7 @@ class User {
         $stmt->bindParam(":name", $name, PDO::PARAM_STR);
         $stmt->bindParam(":passwordhash", $passwordhash, PDO::PARAM_STR);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        $stmt->bindParam(":group", $groupid, PDO::PARAM_INT);
+        $stmt->bindParam(":groupid", $groupid, PDO::PARAM_INT);
 
         $stmt->execute();
     }

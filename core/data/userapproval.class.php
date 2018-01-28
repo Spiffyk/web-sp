@@ -98,7 +98,7 @@ class UserApproval {
         if (empty($this->getClosed())) {
             $closed = null;
         } else {
-            $closed = $this->getClosed();
+            $closed = $this->getClosed()->format(Database::DATE_FORMAT);
         }
         $state = $this->getState();
 
@@ -116,7 +116,7 @@ class UserApproval {
      *
      * @return null|UserApproval
      */
-    public static function dao_getById(): ?UserApproval {
+    public static function dao_getById(int $id): ?UserApproval {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()

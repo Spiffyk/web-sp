@@ -50,9 +50,9 @@ if (Session::getInstance()->getGroup()->hasPermission("user_approval")) {
                     <td><?php echo $user->getName(); ?></td>
                     <td><?php echo $user->getEmail(); ?></td>
                     <td>
-                        <form style="white-space: nowrap;">
+                        <form style="white-space: nowrap;" method="POST">
                             <input type="hidden" name="cmd" value="user-accept">
-                            <input type="hidden" name="user" value="<?php echo $user->getId(); ?>">
+                            <input type="hidden" name="approval" value="<?php echo $approval->getId(); ?>">
                             <select name="role" title="Role přidělená po schválení">
                                 <option value="reader">Čtenář</option>
                                 <option value="reviewer">Recenzent</option>
@@ -63,9 +63,9 @@ if (Session::getInstance()->getGroup()->hasPermission("user_approval")) {
                         </form>
                     </td>
                     <td>
-                        <form>
+                        <form method="POST">
                             <input type="hidden" name="cmd" value="user-reject">
-                            <input type="hidden" name="user" value="<?php echo $user->getId(); ?>">
+                            <input type="hidden" name="approval" value="<?php echo $approval->getId(); ?>">
                             <input type="submit" value="Zamítnout">
                         </form>
                     </td>
