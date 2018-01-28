@@ -34,6 +34,11 @@ $fn = function(): bool {
         $messenger->message(Messenger::TYPE_ERROR, "Hesla se musí v obou polích shodovat.");
     }
 
+    if (strlen($password) < 8) {
+        $all_good = false;
+        $messenger->message(Messenger::TYPE_ERROR, "Heslo musí být alespoň 8 znaků dlouhé.");
+    }
+
     if (!$all_good) {
         return false;
     }
