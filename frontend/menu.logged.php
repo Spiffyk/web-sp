@@ -6,10 +6,6 @@ $group = $session->getGroup();
 <ul>
     <li><strong><?php echo Session::getInstance()->getUser()->getName(); ?></strong></li>
     <?php
-    if ($group->hasPermission("control_panel")) {
-        ?> <li><a href="?action=cpanel">Ovládací panel</a></li> <?php
-    }
-
     if ($group->hasPermission("user_approval")) {
         ?> <li><a href="?action=user-approval">Uživatelé ke schválení</a></li> <?php
     }
