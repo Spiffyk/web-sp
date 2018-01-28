@@ -3,7 +3,7 @@
 <?php
 const USER_APPROVALS_PER_PAGE = 10;
 
-if (Session::getInstance()->getGroup()->hasPermission("user_approval")) {
+if (Session::getInstance()->getGroup()->hasPermission(Permissions::USER_APPROVAL)) {
     if (empty($_GET["page"])) {
         $current_page = 0;
     } else {

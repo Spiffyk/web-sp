@@ -134,35 +134,39 @@ echo "Creating `root` group...\n";
 $root_group = new UserGroup();
 $root_group->setId(UserGroup::GROUP_ROOT);
 $root_group->setName("root");
-$root_group->addPermission("login", "root");
+$root_group->addPermission(Permissions::LOGIN, Permissions::ROOT);
 $root_group->dao_create();
 
 echo "Creating `reader` group...\n";
 $reader_group = new UserGroup();
 $reader_group->setId(UserGroup::GROUP_READER);
 $reader_group->setName("reader");
-$reader_group->addPermission("login", "read-articles");
+$reader_group->addPermission(Permissions::LOGIN, Permissions::ARTICLE_READ);
 $reader_group->dao_create();
 
 echo "Creating `reviewer` group...\n";
 $review_group = new UserGroup();
 $review_group->setId(UserGroup::GROUP_REVIEWER);
 $review_group->setName("reviewer");
-$review_group->addPermission("login", "article_read", "article_review");
+$review_group->addPermission(Permissions::LOGIN, Permissions::ARTICLE_READ, Permissions::ARTICLE_REVIEW);
 $review_group->dao_create();
 
 echo "Creating `author` group...\n";
 $author_group = new UserGroup();
 $author_group->setId(UserGroup::GROUP_AUTHOR);
 $author_group->setName("author");
-$author_group->addPermission("login", "article_read", "article_creation");
+$author_group->addPermission(Permissions::LOGIN, Permissions::ARTICLE_READ, Permissions::ARTICLE_CREATE);
 $author_group->dao_create();
 
 echo "Creating `admin` group...\n";
 $admin_group = new UserGroup();
 $admin_group->setId(UserGroup::GROUP_ADMIN);
 $admin_group->setName("admin");
-$admin_group->addPermission("login", "article_read", "article_approval", "user_approval");
+$admin_group->addPermission(
+    Permissions::LOGIN,
+    Permissions::ARTICLE_READ,
+    Permissions::ARTICLE_APPROVAL,
+    Permissions::USER_APPROVAL);
 $admin_group->dao_create();
 
 echo "Creating `root` user...\n";

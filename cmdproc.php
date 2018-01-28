@@ -17,4 +17,10 @@ switch($cmd) {
     case "register":
         require_once __DIR__ . "/cmd/register.php";
         break;
+    case "user-accept":
+        require_once __DIR__ . "/cmd/userapprove.php";
+        break;
+    case "user-reject":
+        require_once __DIR__ . "/cmd/userreject.php";
+        break;
 }

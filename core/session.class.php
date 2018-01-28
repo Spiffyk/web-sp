@@ -100,7 +100,7 @@ class Session {
         }
 
         if (password_verify($password, $user->getPasswordhash())) {
-            if ($user->getGroup()->hasPermission("login")) {
+            if ($user->getGroup()->hasPermission(Permissions::LOGIN)) {
                 $this->start($user);
                 return Session::LOGIN_SUCCESS;
             } else {
