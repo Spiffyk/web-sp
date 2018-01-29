@@ -23,7 +23,19 @@ $group = $session->getGroup();
     }
 
     if ($group->hasPermission(Permissions::ARTICLE_APPROVAL)) {
-        ?> <li><a href="?action=article-approval">Články ke schválení</a></li> <?php
+        ?>
+
+        <li>
+            <a href="?action=article-approval">Články ke schválení</a>
+            <?php
+            $count = Article::dao_countWaiting();
+            if ($count > 0) {
+                echo "(" . $count . ")";
+            }
+            ?>
+        </li>
+
+        <?php
     }
 
     if ($group->hasPermission(Permissions::ARTICLE_CREATE)) {
