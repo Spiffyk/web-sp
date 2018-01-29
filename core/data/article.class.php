@@ -216,6 +216,168 @@ class Article {
     }
 
     /**
+     * Counts the public articles.
+     * @return int the count of public articles
+     */
+    public static function dao_countPublic(): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `state`='%s'",
+                $db->table(self::DB_TAB_ARTICLES), self::STATE_ACCEPTED));
+
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
+    }
+
+    /**
+     * Gets the public articles ordered by the date of creation.
+     *
+     * @param int $n how many
+     * @param int $offset the offset
+     * @return array
+     */
+    public static function dao_getNewestPublic(int $n, int $offset): array {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `state`='%s' ORDER BY `created` DESC LIMIT :n OFFSET :offset",
+                $db->table(self::DB_TAB_ARTICLES), self::STATE_ACCEPTED));
+
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        $articles = array();
+
+        while (!empty($result = $stmt->fetch(PDO::FETCH_ASSOC))) {
+            array_push($articles, self::dao_dataToArticle($result));
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Counts the waiting articles.
+     * @return int the count of waiting articles
+     */
+    public static function dao_countWaiting(): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `state`='%s'",
+                $db->table(self::DB_TAB_ARTICLES), self::STATE_AWAITING_REVIEW));
+
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
+    }
+
+    /**
+     * Gets the waiting articles ordered by the date of creation.
+     *
+     * @param int $n how many
+     * @param int $offset the offset
+     * @return array
+     */
+    public static function dao_getNewestWaiting(int $n, int $offset): array {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `state`='%s' ORDER BY `created` DESC LIMIT :n OFFSET :offset",
+                $db->table(self::DB_TAB_ARTICLES), self::STATE_AWAITING_REVIEW));
+
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        $articles = array();
+
+        while (!empty($result = $stmt->fetch(PDO::FETCH_ASSOC))) {
+            array_push($articles, self::dao_dataToArticle($result));
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Counts the articles.
+     * @return int the count of articles
+     */
+    public static function dao_count(): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s`",
+                $db->table(self::DB_TAB_ARTICLES)));
+
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
+    }
+
+    /**
+     * Gets the waiting articles ordered by the date of creation.
+     *
+     * @param int $n how many
+     * @param int $offset the offset
+     * @return array
+     */
+    public static function dao_getNewestByAuthor(User $author, int $n, int $offset): array {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `author`=:author ORDER BY `created` DESC LIMIT :n OFFSET :offset",
+                $db->table(self::DB_TAB_ARTICLES)));
+
+        $author_id = $author->getId();
+
+        $stmt->bindParam(":author", $author_id, PDO::PARAM_INT);
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+
+        $articles = array();
+
+        while (!empty($result = $stmt->fetch(PDO::FETCH_ASSOC))) {
+            array_push($articles, self::dao_dataToArticle($result));
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Counts the articles.
+     * @return int the count of articles
+     */
+    public static function dao_countByAuthor(User $author): int {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `author`=:author",
+                $db->table(self::DB_TAB_ARTICLES)));
+
+        $author_id = $author->getId();
+
+        $stmt->bindParam(":author", $author_id, PDO::PARAM_INT);
+        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
+    }
+
+    /**
      * Gets the articles ordered by the date of creation.
      *
      * @param int $n how many
@@ -227,7 +389,7 @@ class Article {
         $stmt = $db
             ->getPdo()
             ->prepare(sprintf("SELECT * FROM `%s` ORDER BY `created` DESC LIMIT :n OFFSET :offset",
-                $db->table(Article::DB_TAB_ARTICLES)));
+                $db->table(self::DB_TAB_ARTICLES)));
 
         $stmt->bindParam(":n", $n, PDO::PARAM_INT);
         $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
