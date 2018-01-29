@@ -46,7 +46,7 @@ if ($no_of_articles == 0) {
             <tr>
                 <td><?php echo $article->getTitle(); ?></td>
                 <td><?php echo $article->getAuthor()->getName(); ?></td>
-                <td class="wrap"><?php echo $article->getAbstract(); ?></td>
+                <td class="wrap"><?php echo $article->getAbstractHtml(); ?></td>
                 <td>
 
                     <?php

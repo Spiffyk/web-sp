@@ -112,6 +112,16 @@ class Article {
     }
 
     /**
+     * Gets the abstract of the article in a HTML-safe manner.
+     *
+     * @return string the content of the article edited for use in HTML
+     */
+    public function getAbstractHtml(): string {
+        $replaced = htmlspecialchars($this->getAbstract());
+        return str_replace("\n", "<br />", $replaced);
+    }
+
+    /**
      * @return string the path to the PDF file
      */
     public function getFile(): string {

@@ -5,7 +5,8 @@ $session = Session::getInstance();
 $group = $session->getGroup();
 
 $title = $_POST["title"];
-$abstract = $_POST["abstract"];
+$htmlabstract = htmlspecialchars($_POST["abstract"]);
+$abstract = str_replace("\n", "<br />", $htmlabstract);
 
 if (empty($_GET["article"])) {
     $isNew = true;
@@ -20,7 +21,7 @@ if (empty($_GET["article"])) {
     }
 
     if (empty($abstract)) {
-        $abstract = $article->getAbstract();
+        $abstract = $article->getAbstractHtml();
     }
 }
 
