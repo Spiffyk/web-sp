@@ -51,7 +51,7 @@ if ($session->getGroup()->hasPermission(Permissions::ARTICLE_CREATE)) {
 
                     <tr>
                         <td><?php echo $article->getTitle(); ?></td>
-                        <td><?php echo $article->getAbstract(); ?></td>
+                        <td class="wrap"><?php echo $article->getAbstract(); ?></td>
                         <td>
                             <?php
                                 switch($article->getState()) {
