@@ -27,10 +27,11 @@ class Session {
      * Session singleton constructor.
      */
     private function __construct() {
+        global $db_prefix;
         session_start();
 
-        if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION["userid"])) {
-            $this->user = User::dao_getById($_SESSION["userid"]);
+        if (session_status() == PHP_SESSION_ACTIVE && isset($_SESSION[$db_prefix . "userid"])) {
+            $this->user = User::dao_getById($_SESSION[$db_prefix . "userid"]);
             $this->group = $this->user->getGroup();
         } else {
             $this->group = UserGroup::get(UserGroup::GROUP_ANONYMOUS);
@@ -78,8 +79,9 @@ class Session {
      * @param User $user the user to set
      */
     private function start(User $user) {
+        global $db_prefix;
         session_start();
-        $_SESSION["userid"] = $user->getId();
+        $_SESSION[$db_prefix . "userid"] = $user->getId();
         $this->user = $user;
         $this->group = $user->getGroup();
     }
