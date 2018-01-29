@@ -22,7 +22,9 @@ $group = $session->getGroup();
         <?php
     }
 
-    if ($group->hasPermission(Permissions::ARTICLE_APPROVAL)) {
+    if ($group->hasPermission(Permissions::ARTICLE_APPROVAL) ||
+        $group->hasPermission(Permissions::ARTICLE_REVIEW)) {
+
         ?>
 
         <li>

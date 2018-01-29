@@ -4,7 +4,13 @@
 
 const ARTICLES_PER_PAGE = 20;
 
-if (Session::getInstance()->getGroup()->hasPermission(Permissions::ARTICLE_APPROVAL)) {
+$group = Session::getInstance()->getGroup();
+
+$canApprove = $group->hasPermission(Permissions::ARTICLE_APPROVAL);
+
+if ($canApprove ||
+    $group->hasPermission(Permissions::ARTICLE_REVIEW)) {
+
     if (empty($_GET["page"])) {
         $current_page = 0;
     } else {
@@ -36,7 +42,15 @@ if (Session::getInstance()->getGroup()->hasPermission(Permissions::ARTICLE_APPRO
                 <td>Autor</td>
                 <td>Abstrakt</td>
                 <td>Datum</td>
-                <td>Schválení</td>
+                <td>
+                    Recenze
+
+                    <?php
+                    if ($canApprove) {
+                        echo "/ Schválení";
+                    }
+                    ?>
+                </td>
             </tr>
             </thead>
             <tbody>
@@ -48,7 +62,7 @@ if (Session::getInstance()->getGroup()->hasPermission(Permissions::ARTICLE_APPRO
                 <tr>
                     <td><?php echo $article->getTitle(); ?></td>
                     <td><?php echo $article->getAuthor()->getName(); ?></td>
-                    <td class="wrap"><?php echo $article->getAbstract(); ?></td>
+                    <td class="wrap"><?php echo $article->getAbstractHtml(); ?></td>
                     <td>
 
                         <?php
@@ -62,7 +76,17 @@ if (Session::getInstance()->getGroup()->hasPermission(Permissions::ARTICLE_APPRO
                         ?>
 
                     </td>
-                    <td><a href="?action=article-reviews&article=<?php echo $article->getId(); ?>">Schválení</a></td>
+                    <td>
+                        <a href="?action=article-reviews&article=<?php echo $article->getId(); ?>">
+                            Recenze
+
+                            <?php
+                            if ($canApprove) {
+                                echo "/ Schválení";
+                            }
+                            ?>
+                        </a>
+                    </td>
                 </tr>
 
                 <?php
