@@ -8,8 +8,10 @@ $title = $_POST["title"];
 $abstract = $_POST["abstract"];
 
 if (empty($_GET["article"])) {
+    $isNew = true;
     $article_id = "new";
 } else {
+    $isNew = false;
     $article_id = $_GET["article"];
     $article = Article::dao_getById($article_id);
 
@@ -33,9 +35,25 @@ if ($group->hasPermission(Permissions::ARTICLE_CREATE)) {
         <br /><br />
         <label>Abstrakt<br /><textarea name="abstract"><?php echo $abstract; ?></textarea></label>
         <br /><br />
-        <label>PDF Soubor<br /><input type="file" name="file" accept="application/pdf"> (max. <?php echo Article::PDF_MAX_MB ?> MB)</label>
+        <label>
+            PDF Soubor
+
+            <?php
+            if (!$isNew) {
+                echo "- <em><a href=\"/" . $article->getFile() . "\">stávající</a> bude <strong>přepsán</strong>, pokud bude vybrán nový</em>";
+            }
+            ?>
+
+            <br />
+            <input type="file" name="file" accept="application/pdf"> (max. <?php echo Article::PDF_MAX_MB ?> MB)</label>
         <br /><br />
         <input type="submit" value="Uložit">
+
+        <?php
+        if (!$isNew) {
+            echo "- <em>příspěvek bude vrácen do stavu čekání na schválení</em>";
+        }
+        ?>
     </form>
 
     <?php
