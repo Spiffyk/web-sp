@@ -6,7 +6,10 @@ class Article {
     const STATE_ACCEPTED = 2;
     const STATE_REJECTED = 3;
 
-    const DB_TAB_ARTICLES = "articles";
+    const PDF_MAX_MB = 10;
+    const PDF_PATH_PREFIX = "uploaded-articles/";
+
+    const DB_TAB_ARTICLES = "article";
 
     private $id, $author, $created, $modified, $state, $title, $abstract, $file;
 
@@ -130,10 +133,10 @@ class Article {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
-            ->prepare(sprintf("INSERT INTO `%s` (`author_id`, `created`, `modified`, `state`, `title`, `abstract`, `file`) VALUES (:author_id, :created, :modified, :state, :title, :abstract, :file)",
+            ->prepare(sprintf("INSERT INTO `%s` (`author`, `created`, `modified`, `state`, `title`, `abstract`, `file`) VALUES (:author_id, :created, :modified, :state, :title, :abstract, :file)",
                 $db->table(Article::DB_TAB_ARTICLES)));
 
-        $author_id = $this->getAuthor();
+        $author_id = $this->getAuthor()->getId();
         $created = $this->getCreated()->format(Database::DATE_FORMAT);
         if (empty($this->getModified())) {
             $modified = null;
@@ -165,11 +168,11 @@ class Article {
         $db = Database::getInstance();
         $stmt = $db
             ->getPdo()
-            ->prepare(sprintf("UPDATE `%s` SET `author_id`=:author_id, `created`=:created, `modified`=:modified, `state`=:state, `title`=:title, `abstract`=:abstract, `file`=:file WHERE `id`=:id",
+            ->prepare(sprintf("UPDATE `%s` SET `author`=:author_id, `created`=:created, `modified`=:modified, `state`=:state, `title`=:title, `abstract`=:abstract, `file`=:file WHERE `id`=:id",
                 $db->table(Article::DB_TAB_ARTICLES)));
 
         $id = $this->getId();
-        $author_id = $this->getAuthor();
+        $author_id = $this->getAuthor()->getId();
         $created = $this->getCreated()->format(Database::DATE_FORMAT);
         if (empty($this->getModified())) {
             $modified = null;

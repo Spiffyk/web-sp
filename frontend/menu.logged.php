@@ -15,7 +15,8 @@ $group = $session->getGroup();
     }
 
     if ($group->hasPermission(Permissions::ARTICLE_CREATE)) {
-        ?> <li><a href="?action=userarticles">Moje články</a></li> <?php
+        ?> <li><a href="?action=userarticles">Moje příspěvky</a></li> <?php
+        ?> <li><a href="?action=article-edit">Vytvořit příspěvek</a></li> <?php
     }
     ?>
     <li><a href="?cmd=logout">Odhlásit se</a></li>

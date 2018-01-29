@@ -19,6 +19,9 @@ switch($action) {
     case "user-approval":
         require __DIR__ . "/action/userapproval.php";
         break;
+    case "article-edit":
+        require __DIR__ . "/action/articleedit.php";
+        break;
     default:
         echo "<em>Undefined action <strong>" . htmlspecialchars($action) . "</strong>!</em>";
 }
