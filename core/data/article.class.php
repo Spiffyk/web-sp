@@ -226,8 +226,6 @@ class Article {
             ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `state`='%s'",
                 $db->table(self::DB_TAB_ARTICLES), self::STATE_ACCEPTED));
 
-        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
-        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
@@ -272,8 +270,6 @@ class Article {
             ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `state`='%s'",
                 $db->table(self::DB_TAB_ARTICLES), self::STATE_AWAITING_REVIEW));
 
-        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
-        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
@@ -318,8 +314,6 @@ class Article {
             ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s`",
                 $db->table(self::DB_TAB_ARTICLES)));
 
-        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
-        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC)["count"];
@@ -370,8 +364,6 @@ class Article {
         $author_id = $author->getId();
 
         $stmt->bindParam(":author", $author_id, PDO::PARAM_INT);
-        $stmt->bindParam(":n", $n, PDO::PARAM_INT);
-        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC)["count"];

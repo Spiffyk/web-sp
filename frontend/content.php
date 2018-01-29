@@ -22,6 +22,9 @@ switch($action) {
     case "article-edit":
         require __DIR__ . "/action/articleedit.php";
         break;
+    case "user-articles":
+        require __DIR__ . "/action/userarticles.php";
+        break;
     default:
         echo "<em>Undefined action <strong>" . htmlspecialchars($action) . "</strong>!</em>";
 }
