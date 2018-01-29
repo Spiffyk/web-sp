@@ -21,6 +21,7 @@ if ($no_of_articles == 0) {
     <table>
         <colgroup>
             <col style="width: 1%">
+            <col style="width: 1%">
             <col>
             <col style="width: 1%">
             <col style="width: 1%">
@@ -29,6 +30,7 @@ if ($no_of_articles == 0) {
         <thead>
         <tr>
             <td>Titulek</td>
+            <td>Autor</td>
             <td>Abstrakt</td>
             <td>Datum</td>
             <td>Recenze</td>
@@ -43,6 +45,7 @@ if ($no_of_articles == 0) {
 
             <tr>
                 <td><?php echo $article->getTitle(); ?></td>
+                <td><?php echo $article->getAuthor()->getName(); ?></td>
                 <td class="wrap"><?php echo $article->getAbstract(); ?></td>
                 <td>
 
