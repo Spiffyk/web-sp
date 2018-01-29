@@ -70,12 +70,17 @@ table {
 }
 
 td {
-    padding: 0.1cm;
+    padding: 0.15cm 0.3cm;
+    white-space: nowrap;
+}
+
+td.wrap {
+    white-space: normal;
 }
 
 tbody td {
-    margin: 0.05cm;
-    background-color: rgba(255,255,255,0.5);
+    border: solid rgba(0,0,0,0.1) 0.05cm;
+    background-color: rgba(255,255,255,0.9);
 }
 
 thead {
