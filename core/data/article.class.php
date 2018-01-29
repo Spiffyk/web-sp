@@ -350,7 +350,7 @@ class Article {
         $articles = array();
 
         while (!empty($result = $stmt->fetch(PDO::FETCH_ASSOC))) {
-            array_push($articles, self::dao_dataToArticle($result));
+            array_push($articles, self::dao_dataToArticle($result, $author));
         }
 
         return $articles;
@@ -411,14 +411,18 @@ class Article {
      * @param $data the data array
      * @return null|Article
      */
-    private static function dao_dataToArticle($data) : ?Article {
+    private static function dao_dataToArticle($data, ?User $author=null) : ?Article {
         if (empty($data) || $data == false) {
             return null;
         }
 
         $article = new Article();
         $article->setId($data["id"]);
-        $article->setAuthor(User::get($data["author"]));
+        if (empty($author)) {
+            $article->setAuthor(User::get($data["author"]));
+        } else {
+            $article->setAuthor($author);
+        }
         $article->setCreated(DateTime::createFromFormat(Database::DATE_FORMAT, $data["created"]));
         if (empty($data["modified"])) {
             $article->setModified(null);
