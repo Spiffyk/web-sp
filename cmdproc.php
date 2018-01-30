@@ -29,4 +29,10 @@ switch($cmd) {
     case "review-edit":
         require_once __DIR__ . "/cmd/reviewedit.php";
         break;
+    case "article-approve":
+        require_once __DIR__ . "/cmd/articleapprove.php";
+        break;
+    case "article-reject":
+        require_once __DIR__ . "/cmd/articlereject.php";
+        break;
 }
