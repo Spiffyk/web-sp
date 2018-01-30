@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ ."/appconfig.php";
+
 // Core classes
 require_once __DIR__ . "/core/database.class.php";
 require_once __DIR__ . "/core/config.class.php";
