@@ -87,6 +87,17 @@ class Session {
     }
 
     /**
+     * Checks whether the specified password matches the password hash of the specified user.
+     *
+     * @param User $user
+     * @param string $password
+     * @return bool
+     */
+    public function checkPassword(User $user, string $password) {
+        return password_verify($password, $user->getPasswordhash());
+    }
+
+    /**
      * Attempts a login with the specified credentials.
      *
      * @param string $name the user name
@@ -101,7 +112,7 @@ class Session {
             return Session::LOGIN_WRONG_CREDENTIALS;
         }
 
-        if (password_verify($password, $user->getPasswordhash())) {
+        if ($this->checkPassword($user, $password)) {
             if ($user->getGroup()->hasPermission(Permissions::LOGIN)) {
                 $this->start($user);
                 return Session::LOGIN_SUCCESS;
