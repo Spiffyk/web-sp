@@ -83,7 +83,7 @@ if ($group->hasPermission(Permissions::ARTICLE_READ)) {
                     ?>
 
                     <tr>
-                        <td><?php echo $review->getContentHtml(); ?></td>
+                        <td class="wrap"><?php echo $review->getContentHtml(); ?></td>
                         <td><?php echo $review->getAuthor()->getName(); ?></td>
                         <td><?php echo $review->getCreated()->format("Y-m-d"); ?></td>
                         <td>

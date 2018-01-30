@@ -93,7 +93,10 @@ if ($group->hasPermission(Permissions::ARTICLE_REVIEW)) {
 
         <?php
     } else {
-        ?> Recenze byla upravena. <?php
+        ?>
+        Recenze byla upravena.
+        <a href="?action=article-reviews&article=<?php echo $article->getId(); ?>">Zpět k příspěvku</a>
+        <?php
     }
 } else {
     ?> Nemáte oprávnění k recenzování příspěvků. <?php
