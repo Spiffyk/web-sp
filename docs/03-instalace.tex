@@ -1,0 +1,13 @@
+\section{Instalace aplikace}
+
+Nejprve je třeba upravit nastavení, tj. adresu databáze, název schématu,
+uživatelské jméno a heslo a prefix databázových tabulek, v~souboru
+\verb|appconfig.php| tak, aby byla aplikace schopna fungovat v~aktuálním
+prostředí. Je možné rovněž zakázat použití modulu \verb|memcached|, pokud
+není nainstalován.
+
+Po nastavení hodnot je potřeba spustit webový server s~runtime PHP
+a v~prohlížeči spustit skript \verb|/install.php?confirm=1|. Tento skript
+vytvoří všechny potřebné tabulky potřebné pro běh programu. Rovněž vytvoří
+uživatelské skupiny a uživatele \verb|root| s~absolutními právy. Tento uživatel
+má po instalaci nastaveno heslo \verb|toor|, které je možné po přihlášení změnit.

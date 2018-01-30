@@ -1,2 +1,18 @@
 **/.idea/*
 uploaded-articles/*
+
+# LaTeX-generated files
+**/*.pdf
+**/*.aux
+**/*.log
+**/*.toc
+**/*.te~
+**/*.out
+
+# The University of West Bohemia logo
+# It is probably not even legal to include it in the repository
+docs/znak_zcu.pdf
+docs/znak_zcu.pdf_tex
+docs/znak_zcu.svg
+docs/znak_zcu.zip
+

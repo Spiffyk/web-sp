@@ -1,0 +1,25 @@
+\section{Struktura a architektura aplikace}
+
+Aplikace striktně odděluje frontendovou a backendovou část. Veškeré PHP skripty
+a další datové soubory, jako jsou kaskádové styly, týkající se zobrazování dat
+uživateli se nachází v~adresáři \verb|frontend|.
+
+V~kořeni tohoto adresáře se nacházejí soubory, které obstarávají jednotlivé
+části stránky, jmenovitě hlavičku, nabídku, prostor na systémové zprávy,
+obsah a patičku.
+
+Dále je zde adresář \verb|frontend/action|, kde se nacházejí skripty obsluhující
+jednotlivé obrazovky, např. pro vkládání článků, registraci apod.
+
+Jádro aplikace se nachází v~adresáři \verb|core| a obsahuje základní třídy
+aplikace. Tyto obstarávají připojení k~databázi, vytváření systémových zpráv,
+konfiguraci, přihlašování a další nezbytné části aplikace. Většina těchto tříd
+je realizována dle návrhového vzoru \textit{jedináček}.
+
+Podadresář \verb|core/data| obsahuje datové třídy, které kromě přenosu informací
+o~článcích, uživatelích, recenzích atd. samy obstarávají vlastní ukládání
+a načítání dat z~databáze.
+
+Posledním adresářem je \verb|cmd|, v~němž se nacházejí PHP skripty obsluhující
+příkazy od uživatele, jako je registrace, nahrání článků a recenzí, přihlašování
+a další úkony.
