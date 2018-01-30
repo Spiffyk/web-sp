@@ -78,7 +78,7 @@ if ($no_of_articles == 0) {
             if ($i == $current_page) {
                 echo "<strong>" . ($i + 1) . "</strong> ";
             } else {
-                echo "<a href=\"?action=user-articles&page=" . $i . "\">" . ($i + 1) . "</a> ";
+                echo "<a href=\"?action=home&page=" . $i . "\">" . ($i + 1) . "</a> ";
             }
         }
         ?>
