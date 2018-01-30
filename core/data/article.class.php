@@ -112,13 +112,21 @@ class Article {
     }
 
     /**
+     * Gets the abstract of the article in a HTML-safe manner, not replacing line breaks.
+     *
+     * @return string the content of the article edited for use in HTML
+     */
+    public function getAbstractHtmlNoBr(): string {
+        return htmlspecialchars($this->getAbstract());
+    }
+
+    /**
      * Gets the abstract of the article in a HTML-safe manner.
      *
      * @return string the content of the article edited for use in HTML
      */
     public function getAbstractHtml(): string {
-        $replaced = htmlspecialchars($this->getAbstract());
-        return str_replace("\n", "<br />", $replaced);
+        return str_replace("\n", "<br />", $this->getAbstractHtmlNoBr());
     }
 
     /**

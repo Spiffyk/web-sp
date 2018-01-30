@@ -21,7 +21,7 @@ if (empty($_GET["article"])) {
     }
 
     if (empty($abstract)) {
-        $abstract = $article->getAbstractHtml();
+        $abstract = $article->getAbstractHtmlNoBr();
     }
 }
 

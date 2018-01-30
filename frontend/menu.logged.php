@@ -28,7 +28,7 @@ $group = $session->getGroup();
         ?>
 
         <li>
-            <a href="?action=article-approval">Články ke schválení</a>
+            <a href="?action=article-approval">Příspěvky ke schválení</a>
             <?php
             $count = Article::dao_countWaiting();
             if ($count > 0) {
