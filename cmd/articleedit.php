@@ -50,6 +50,11 @@ $fn = function() {
     } else {
         $article = Article::dao_getById($_POST["article-id"]);
         $article->setModified(new DateTime());
+
+        if ($article->getAuthor()->getId() != $session->getUser()->getId()) {
+            $messenger->message(Messenger::TYPE_ERROR, "Nelze upravovat cizí příspěvky!");
+            return;
+        }
     }
 
     $article->setState(Article::STATE_AWAITING_REVIEW);

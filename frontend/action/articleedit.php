@@ -26,38 +26,44 @@ if (empty($_GET["article"])) {
 }
 
 if ($group->hasPermission(Permissions::ARTICLE_CREATE)) {
-    ?>
 
-    <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="cmd" value="article-edit">
-        <input type="hidden" name="article-id" value="<?php echo $article_id; ?>">
+    if ($isNew || $article->getAuthor()->getId() == $session->getUser()->getId()) {
+        ?>
 
-        <label>Titulek<br /><input type="text" name="title" size="100" value="<?php echo $title; ?>"></label>
-        <br /><br />
-        <label>Abstrakt<br /><textarea name="abstract"><?php echo $abstract; ?></textarea></label>
-        <br /><br />
-        <label>
-            PDF Soubor
+        <form method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="cmd" value="article-edit">
+            <input type="hidden" name="article-id" value="<?php echo $article_id; ?>">
+
+            <label>Titulek<br/><input type="text" name="title" size="100" value="<?php echo $title; ?>"></label>
+            <br/><br/>
+            <label>Abstrakt<br/><textarea name="abstract"><?php echo $abstract; ?></textarea></label>
+            <br/><br/>
+            <label>
+                PDF Soubor
+
+                <?php
+                if (!$isNew) {
+                    echo "- <em><a href=\"/" . $article->getFile() . "\">stávající</a> bude <strong>přepsán</strong>, pokud bude vybrán nový</em>";
+                }
+                ?>
+
+                <br/>
+                <input type="file" name="file" accept="application/pdf"> (max. <?php echo Article::PDF_MAX_MB ?>
+                MB)</label>
+            <br/><br/>
+            <input type="submit" value="Uložit">
 
             <?php
             if (!$isNew) {
-                echo "- <em><a href=\"/" . $article->getFile() . "\">stávající</a> bude <strong>přepsán</strong>, pokud bude vybrán nový</em>";
+                echo "- <em>příspěvek bude vrácen do stavu čekání na schválení</em>";
             }
             ?>
-
-            <br />
-            <input type="file" name="file" accept="application/pdf"> (max. <?php echo Article::PDF_MAX_MB ?> MB)</label>
-        <br /><br />
-        <input type="submit" value="Uložit">
+        </form>
 
         <?php
-        if (!$isNew) {
-            echo "- <em>příspěvek bude vrácen do stavu čekání na schválení</em>";
-        }
-        ?>
-    </form>
-
-    <?php
+    } else {
+        ?> Nemůžete upravovat cizí příspěvky. <?php
+    }
 } else {
-    ?> Nemáte oprávnění k tvorbě/úpravě článků. <?php
+    ?> Nemáte oprávnění k tvorbě/úpravě příspěvky. <?php
 }
