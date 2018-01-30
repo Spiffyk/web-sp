@@ -29,6 +29,11 @@ $fn = function(): bool {
         $messenger->message(Messenger::TYPE_ERROR, "E-mail musí být ve správném tvaru.");
     }
 
+    if (!User::dao_isEmailAvailable($email)) {
+        $all_good = false;
+        $messenger->message(Messenger::TYPE_ERROR, "Tento e-mail je již používán.");
+    }
+
     if ($password != $password_confirm) {
         $all_good = false;
         $messenger->message(Messenger::TYPE_ERROR, "Hesla se musí v obou polích shodovat.");

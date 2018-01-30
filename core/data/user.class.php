@@ -144,6 +144,18 @@ class User {
         return self::dao_dataToUser($result);
     }
 
+    public static function dao_isEmailAvailable(string $email): bool {
+        $db = Database::getInstance();
+        $stmt = $db->getPdo()
+            ->prepare(sprintf("SELECT COUNT(*) as count FROM `%s` WHERE `email`=:email",
+                $db->table(User::DB_TAB_USERS)));
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return ($result["count"] == 0);
+    }
+
     /**
      * Converts a data array associatively fetched from the database to a User.
      *
