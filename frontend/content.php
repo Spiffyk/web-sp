@@ -34,6 +34,9 @@ switch($action) {
     case "review-edit":
         require __DIR__ . "/action/reviewedit.php";
         break;
+    case "user-self-edit":
+        require __DIR__ . "/action/userselfedit.php";
+        break;
     default:
         echo "<em>Undefined action <strong>" . htmlspecialchars($action) . "</strong>!</em>";
 }

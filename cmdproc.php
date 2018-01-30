@@ -35,4 +35,10 @@ switch($cmd) {
     case "article-reject":
         require_once __DIR__ . "/cmd/articlereject.php";
         break;
+    case "user-change-email":
+        require_once __DIR__ . "/cmd/userchangeemail.php";
+        break;
+    case "user-change-password":
+        require_once __DIR__ . "/cmd/userchangepassword.php";
+        break;
 }

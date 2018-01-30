@@ -144,6 +144,30 @@ class User {
         return self::dao_dataToUser($result);
     }
 
+    /**
+     * Gets the user with the specified e-mail.
+     *
+     * @param string $email
+     * @return null|User
+     */
+    public static function dao_getUserByEmail(string $email): ?User {
+        $db = Database::getInstance();
+        $stmt = $db->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `email`=:email",
+                $db->table(User::DB_TAB_USERS)));
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return self::dao_dataToUser($result);
+    }
+
+    /**
+     * Checks whether the specified e-mail is available.
+     *
+     * @param string $email
+     * @return bool
+     */
     public static function dao_isEmailAvailable(string $email): bool {
         $db = Database::getInstance();
         $stmt = $db->getPdo()

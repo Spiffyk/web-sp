@@ -4,7 +4,11 @@ $group = $session->getGroup();
 ?>
 
 <ul>
-    <li><strong><?php echo Session::getInstance()->getUser()->getName(); ?></strong></li>
+    <li>
+        <strong>
+            <a href="?action=user-self-edit"><?php echo Session::getInstance()->getUser()->getName(); ?></a>
+        </strong>
+    </li>
     <?php
     if ($group->hasPermission(Permissions::USER_APPROVAL)) {
         ?>
