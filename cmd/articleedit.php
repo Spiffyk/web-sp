@@ -7,7 +7,7 @@ $fn = function() {
 
     if (!$group->hasPermission(Permissions::ARTICLE_CREATE)) {
         $messenger->message(Messenger::TYPE_ERROR, "K úpravě/tvorbě příspěvků nemáte oprávnění!");
-        return;
+        return false;
     }
 
     if ($_POST["article-id"] == "new") {
@@ -40,7 +40,7 @@ $fn = function() {
     }
 
     if (!$all_good) {
-        return;
+        return false;
     }
 
     if ($isNew) {
@@ -53,7 +53,7 @@ $fn = function() {
 
         if ($article->getAuthor()->getId() != $session->getUser()->getId()) {
             $messenger->message(Messenger::TYPE_ERROR, "Nelze upravovat cizí příspěvky!");
-            return;
+            return false;
         }
     }
 
@@ -82,6 +82,8 @@ $fn = function() {
     } else {
         $messenger->message(Messenger::TYPE_SUCCESS, "Příspěvek byl úspěšně upraven.");
     }
+
+    return true;
 };
 
-$fn();
+$article_edit_complete = $fn();

@@ -66,28 +66,35 @@ if ($group->hasPermission(Permissions::ARTICLE_REVIEW)) {
         </tbody>
     </table>
 
-    <h3>Moje recenze</h3>
-
-    <form method="post">
-        <input type="hidden" name="cmd" value="review-edit">
-        <input type="hidden" name="article" value="<?php echo $article->getId(); ?>">
-
-        <label>Text recenze<br /><textarea name="content"><?php echo $rcontent; ?></textarea></label>
-        <br /><br />
-        <label>
-            Návrh<br />
-            <select name="proposal" >
-                <option></option>
-                <option value="accept" <?php echo ($rprop == "accept") ? "selected" : ""; ?>>Přijmout</option>
-                <option value="reject" <?php echo ($rprop == "reject") ? "selected" : ""; ?>>Zamítnout</option>
-                <option value="edit" <?php echo ($rprop == "edit") ? "selected" : ""; ?>>Upravit</option>
-            </select>
-        </label>
-        <input type="submit" value="Odeslat">
-    </form>
-
     <?php
+    global $review_edit_complete;
+    if (!isset($review_edit_complete) || !$review_edit_complete) {
+        ?>
 
+        <h3>Moje recenze</h3>
+
+        <form method="post">
+            <input type="hidden" name="cmd" value="review-edit">
+            <input type="hidden" name="article" value="<?php echo $article->getId(); ?>">
+
+            <label>Text recenze<br/><textarea name="content"><?php echo $rcontent; ?></textarea></label>
+            <br/><br/>
+            <label>
+                Návrh<br/>
+                <select name="proposal">
+                    <option></option>
+                    <option value="accept" <?php echo ($rprop == "accept") ? "selected" : ""; ?>>Přijmout</option>
+                    <option value="reject" <?php echo ($rprop == "reject") ? "selected" : ""; ?>>Zamítnout</option>
+                    <option value="edit" <?php echo ($rprop == "edit") ? "selected" : ""; ?>>Upravit</option>
+                </select>
+            </label>
+            <input type="submit" value="Odeslat">
+        </form>
+
+        <?php
+    } else {
+        ?> Recenze byla upravena. <?php
+    }
 } else {
     ?> Nemáte oprávnění k recenzování příspěvků. <?php
 }

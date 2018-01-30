@@ -9,12 +9,12 @@ $fn = function() {
 
     if (!$group->hasPermission(Permissions::ARTICLE_REVIEW)) {
         $messenger->message(Messenger::TYPE_ERROR, "Nemáte oprávnění k recenzování příspěvků!");
-        return;
+        return false;
     }
 
     if (empty($_POST["proposal"])) {
         $messenger->message(Messenger::TYPE_ERROR, "Návrh musí být vybrán!");
-        return;
+        return false;
     }
 
     $review = Review::dao_getForArticleByReviewer($article, $user);
@@ -42,7 +42,7 @@ $fn = function() {
             break;
         default:
             $messenger->message(Messenger::TYPE_ERROR, "Chybný návrh!");
-            return;
+            return false;
     }
 
     if ($isNew) {
@@ -52,6 +52,7 @@ $fn = function() {
     }
 
     $messenger->message(Messenger::TYPE_SUCCESS, "Vaše recenze byla uložena.");
+    return true;
 };
 
-$fn();
+$review_edit_complete = $fn();
