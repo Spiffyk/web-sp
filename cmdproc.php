@@ -26,4 +26,7 @@ switch($cmd) {
     case "article-edit":
         require_once __DIR__ . "/cmd/articleedit.php";
         break;
+    case "review-edit":
+        require_once __DIR__ . "/cmd/reviewedit.php";
+        break;
 }

@@ -1,6 +1,10 @@
 <?php
 class Review {
 
+    const PROPOSAL_REJECT = 0;
+    const PROPOSAL_ACCEPT = 1;
+    const PROPOSAL_EDIT = 2;
+
     const DB_TAB_REVIEW = "review";
 
     private $id, $article, $author, $proposal, $created, $content;
@@ -55,6 +59,14 @@ class Review {
         $this->content = $content;
     }
 
+    public function getContentHtmlNoBr(): string {
+        return htmlspecialchars($this->getContent());
+    }
+
+    public function getContentHtml(): string {
+        return str_replace("\n", "<br />", $this->getContentHtmlNoBr());
+    }
+
 
     /**
      * Creates the review in the database.
@@ -92,6 +104,13 @@ class Review {
             ->getPdo()
             ->prepare(sprintf("UPDATE `%s` SET `article`=:article, `author`=:author, `proposal`=:proposal, `created`=:created, `content`=:content WHERE `id`=:id",
                 $db->table(self::DB_TAB_REVIEW)));
+
+        $id = $this->getId();
+        $article = $this->getArticle()->getId();
+        $author = $this->getAuthor()->getId();
+        $proposal = $this->getProposal();
+        $created = $this->getCreated()->format(Database::DATE_FORMAT);
+        $content = $this->getContent();
 
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->bindParam(":article", $article, PDO::PARAM_INT);
@@ -156,6 +175,30 @@ class Review {
         }
 
         return $reviews;
+    }
+
+    /**
+     * Gets a review by the specified user for the specified article.
+     *
+     * @param Article $article
+     * @param User $reviewer
+     * @return null|Review
+     */
+    public static function dao_getForArticleByReviewer(Article $article, User $reviewer): ?Review {
+        $db = Database::getInstance();
+        $stmt = $db
+            ->getPdo()
+            ->prepare(sprintf("SELECT * FROM `%s` WHERE `article`=:article AND `author`=:reviewer", $db->table(self::DB_TAB_REVIEW)));
+
+        $articleid = $article->getId();
+        $reviewerid = $reviewer->getId();
+
+        $stmt->bindParam(":article", $articleid, PDO::PARAM_INT);
+        $stmt->bindParam(":reviewer", $reviewerid, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return self::dao_dataToReview($result);
     }
 
     /**
