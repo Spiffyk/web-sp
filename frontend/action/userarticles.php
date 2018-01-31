@@ -1,7 +1,7 @@
 <h2>Moje příspěvky</h2>
 
 <?php
-const ARTICLES_PER_PAGE = 20;
+const ARTICLES_PER_PAGE = 5;
 
 $session = Session::getInstance();
 
